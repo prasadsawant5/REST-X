@@ -3,11 +3,11 @@ var router = express.Router();
 
 /* GET home page. */
 router.post('/', function(req, res, next) {
-  console.log(req.body);
-  // console.log(req.body.request.intent.slots);
+  console.log(req.body.request.intent);
+  console.log(req.body.request.intent.slots);
 
   var r = {};
-  if (req.body.request.intent.slots.game.value === 'fortnite') {
+  if (req.body.request.intent.slots.game.value === 'fortnite' || req.body.request.intent.slots.game.value === 'dota') {
     r = {
       version: "1.0",
       sessionAttributes: {
@@ -16,8 +16,7 @@ router.post('/', function(req, res, next) {
       response: {
         outputSpeech: {
           type: "PlainText",
-          text: "About to run fortnite",
-          ssml: "<speak>SSML text string to speak</speak>",
+          text: "About to run " + req.body.request.intent.slots.game.value,
           playBehavior: "REPLACE_ENQUEUED"      
         }
       }
